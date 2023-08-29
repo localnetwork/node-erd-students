@@ -1,7 +1,16 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const app = express();
 
 const PORT = process.env.NODE_PORT || 3001;
+
+
+
+// ADDED BODY PARSER TO GET THE BODY VALUES FROM REQUEST.
+
+app.use(bodyParser.json()); // Parse JSON data 
+app.use(bodyParser.urlencoded({ extended: true })); 
 
 // // Load routes
 const studentRoute = require('./routes/studentRoute');
