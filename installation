@@ -1,0 +1,25 @@
+
+sudo service docker restart
+
+
+run docker-compose - docker-compose up
+
+check running - docker ps
+
+run docker - docker start <name>
+
+list all docker containers - docker container ls -a
+remove containers - docker rm $(docker ps -a -q)
+
+rename docker - docker rename <Container ID> <new name>
+
+stop running docker container - docker stop <docker name>
+
+start docker - docker start <docker name>
+
+
+
+sudo apt install docker-compose
+
+
+phpmyadmin link: http://localhost:8077/index.php

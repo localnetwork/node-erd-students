@@ -64,7 +64,28 @@ const studentModel = {
 
             callback(null, result.insertId); // Success 
         });
-    } 
+    },
+
+    createStudentParentRelation: (studentId, parentId, callback) => {
+        const uniqueId = uuid.v4(); 
+
+        const query = 'INSERT INTO student_parent_relations (uuid, student_id, parent_id) VALUES (?, ?, ?)';  
+        
+        connection.query(query, [studentId, parentId], (error, callback) => {
+            if(error) {
+                return callback(error); 
+            }
+
+            const createRelation = {
+                id: result.insertId,
+                uuid: uniqueId,
+                student_id: studentId,
+                parent_id: parentId,
+            }
+
+            callback(null, result.insertId); // Success create relation.
+        });
+    }
 }; 
 
 module.exports = studentModel; 

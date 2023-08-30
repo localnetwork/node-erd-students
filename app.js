@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const PORT = process.env.NODE_PORT || 3001;
+const PORT = process.env.NODE_PORT || 3005;
 
 
 
@@ -12,7 +12,7 @@ const PORT = process.env.NODE_PORT || 3001;
 app.use(bodyParser.json()); // Parse JSON data 
 app.use(bodyParser.urlencoded({ extended: true })); 
 
-// // Load routes
+// Load routes
 const studentRoute = require('./routes/studentRoute');
 
 
