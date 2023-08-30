@@ -33,14 +33,16 @@ const studentController = {
     // const id = req.query.id;
     const name = req.body.name;
     const age = req.body.age;
+    const parent_id = req.body.parent_id;
+
     const studentData = {
       // id: id, 
       name: name,
       age: age,
     };
 
-    console.log(req.body); 
 
+    
     studentValidator.isNameExists(name, (error, nameExists) => {
       if (error) {
         console.error("Error checking name existence:", error);
@@ -53,10 +55,34 @@ const studentController = {
       if(!studentValidator.ageNotNull(age)) {
         return res.status(400).json({ error: 'Age should not be empty.' })
       }
-      
-      
 
-      studentModel.createStudent(studentData, (error) => {
+
+      // if(!studentValidator.isNoParent(studentId, (error, noParent))) { 
+      //   console.error('Error creating student that has no parent:', error);
+      //   return res.status(500).json({ error: 'No parent has been associated.' })
+      // } 
+
+
+      studentValidator.isParentExists(parent_id, (error, parent) => {
+        if(error) {
+          console.log('errorrr'); 
+        }
+        
+        if(parent){ 
+          // return res.status(201).json({
+          //   message: "Has Parent"
+          // });
+          console.log('has parent'); 
+          studentModel.createStudentParentRelation(id, (error) => {
+            
+          });
+        }else { 
+          return res.status(500).json({ error: "Parent can't be found." });
+        } 
+      });
+  
+      studentModel.createStudent((error) => {
+
         if(error) {
           console.log('error type: ' + error.sqlState); 
           return res.status(500).json({response: error.sqlState, message: "Student cannot be created due to mysqlstate error: " + error.sqlState})
@@ -64,6 +90,7 @@ const studentController = {
         return res
             .status(201)
             .json({ response: 201, message: "Student created successfully. " });
+
       });
     });
   },

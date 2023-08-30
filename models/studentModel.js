@@ -66,25 +66,39 @@ const studentModel = {
         });
     },
 
-    createStudentParentRelation: (studentId, parentId, callback) => {
-        const uniqueId = uuid.v4(); 
-
+    createStudentParentRelation: (studentData, callback) => {
+        const uniqueId = uuid.v4();  
+        console.log('create relation')
         const query = 'INSERT INTO student_parent_relations (uuid, student_id, parent_id) VALUES (?, ?, ?)';  
         
-        connection.query(query, [studentId, parentId], (error, callback) => {
+        connection.query(query, [studentData.id],  (error, result) => {
             if(error) {
-                return callback(error); 
+                console.log('error', error)
             }
+
+            console.log(result); 
 
             const createRelation = {
-                id: result.insertId,
                 uuid: uniqueId,
-                student_id: studentId,
-                parent_id: parentId,
+                // student_id: result.insertId,
             }
 
-            callback(null, result.insertId); // Success create relation.
+            console.log(createRelation); 
         });
+        // connection.query(query, [studentId, parentId], (error, callback) => {
+        //     // if(error) {
+        //     //     return callback(error); 
+        //     // }
+
+        //     // const createRelation = { 
+        //     //     id: result.insertId,
+        //     //     uuid: uniqueId,
+        //     //     student_id: studentId,
+        //     //     parent_id: parentId,
+        //     // }
+
+        //     // callback(null, result.insertId); // Success create relation.
+        // });
     }
 }; 
 
